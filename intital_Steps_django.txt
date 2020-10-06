@@ -1,0 +1,38 @@
+version 2
+*)pip install virtualenvwrapper-win
+
+*)mkvirtualenv FYP
+*)workon test
+*)pip install django djangorestframework mysqlclient django-rest-knox 
+*)pip install django-rest-auth djangorestframework-jwt
+*)pip install djangorestframework
+*)pip install django-cors-headers
+*)django-admin version
+*)django-admin startproject Outcome_Based_Education
+*)python manage.py startapp (name of app)
+*)python manage.py runserver
+*) python manage.py makemigrations
+*)python manage.py migrate
+*)pip install mysqlclient
+*)pip install django-rest-knox
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'django_react',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
+        'OPTIONS': {
+        'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+
+    }
+}
+}
+AUTH_USER_MODEL = 'accounts.User'
+
+
+
+for abstract:https://saralgyaan.com/posts/how-to-extend-django-user-model-using-abstractuser/
