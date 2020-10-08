@@ -94,7 +94,7 @@ class ChairmanRegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username',  'email',
-                  'password', 'department', 'token')
+                  'password','department', 'token')
        # extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -118,7 +118,7 @@ class DepHeadRegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'password', 'department', 'token')
+        fields = ('id', 'username', 'email', 'password', 'token')
        # extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):

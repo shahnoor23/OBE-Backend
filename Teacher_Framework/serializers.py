@@ -1,6 +1,6 @@
 from Chairman_Framework.serializers import CLOSerializer
 from rest_framework import serializers
-from .models import Choice, Question, Assignment, Assignment_Assign_To_Student, GradedAssignment, Graded , Graded_Questions
+from .models import Choice, Question, Assignment,Assignment_Assign_To_Student, GradedAssignment, Graded, CLO_Graded , GA , GQ
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 
@@ -29,9 +29,7 @@ class QuestionSerializer(serializers.ModelSerializer):
         model = Question
         fields = '__all__'
         
-
-    
-
+        
     def create(self, validated_data):
         choice_validated_data = validated_data.pop('choice_set')
         question = Question.objects.create(**validated_data)
@@ -93,27 +91,27 @@ class AssignAssignmentSerializer(serializers.ModelSerializer):
 
 
 #-----------------------------------GRADED ----------------------------------- #
-
-class Graded_QuestionsSerializer(serializers.ModelSerializer):
+class CLO_GradedSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Graded_Questions
-        fields = ('clo_code','marks')
+        model = CLO_Graded
+        fields = ('choice_text',)
 
 class GradedSerializer(serializers.ModelSerializer):
-    graded_set = Graded_QuestionsSerializer(many=True)
+
+    choice_set = CLO_GradedSerializer(many=True)
+    
     class Meta:
         model = Graded
-        fields = ('title', 'graded_set')
+        fields = '__all__'
 
     def create(self, validated_data):
-        grade_validated_data = validated_data.pop('graded_set')
-        qu = Question.objects.create(**validated_data)
+        choice_validated_data = validated_data.pop('choice_set')
+        question = Graded.objects.create(**validated_data)
         choice_set_serializer = self.fields['choice_set']
         for each in choice_validated_data:
             each['question'] = question
         choices = choice_set_serializer.create(choice_validated_data)
-        return question
-    
+        return question    
 
 
 
@@ -124,11 +122,26 @@ class GradedSerializer(serializers.ModelSerializer):
 
 
 
+#------------------------- TESTING ----------------------------- #
+
+class GQSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GQ
+        fields = ('clo_text',)
+
+class GASerializer(serializers.ModelSerializer):
+
+    choice_set = GQSerializer(many=True)
+    class Meta:
+        model = GA
+        fields = '__all__'
 
 
-
-
-
-
-
-
+    def create(self, validated_data):
+        choice_validated_data = validated_data.pop('choice_set')
+        ga = GA.objects.create(**validated_data)
+        choice_set_serializer = self.fields['choice_set']
+        for each in choice_validated_data:
+            each['ga'] = ga
+        choices = choice_set_serializer.create(choice_validated_data)
+        return ga     

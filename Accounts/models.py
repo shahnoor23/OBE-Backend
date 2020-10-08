@@ -29,7 +29,7 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, username, email, password, university, department, semester, batch,year):
         """Create and saves a new user"""
-        user = self.create_user(email, username, password, university, department, batch,year, semester)
+        user = self.create_user(username, email, password, university, department, batch,year, semester)
         user.is_staff = True
         user.is_superuser = True
         user.save(using=self._db)
@@ -39,7 +39,7 @@ class UserManager(BaseUserManager):
 
     def create_admin(self, username, email, password, university, department=False ,batch=False,year=False,semester=False):
      
-        user = self.create_user(email, username, password, university, department , batch,year, semester)
+        user = self.create_user(username, email ,password, university, department , batch,year, semester)
         user.is_staff = True
         user.is_admin = True
         user.save(using=self._db)
@@ -68,7 +68,7 @@ class UserManager(BaseUserManager):
 
     def create_chairman(self, username, email, password, university, department ,batch=False,year=False, semester=False):
         """Create and saves a new user"""
-        user = self.create_user(email, username, password, university, department ,batch,year, semester)
+        user = self.create_user( username, email, password, university, department ,batch,year, semester)
         user.is_chairman = True
         user.save(using=self._db)
 
@@ -76,7 +76,7 @@ class UserManager(BaseUserManager):
 
     def create_depHead(self, username, email, password, university, department ,batch=False,year=False, semester=False):
         """Create and saves a new user"""
-        user = self.create_user(email, username, password, university, department ,batch, year,  semester)
+        user = self.create_user( username, email, password, university, department ,batch, year,  semester)
         user.is_depHead = True
         user.save(using=self._db)
 
@@ -84,7 +84,7 @@ class UserManager(BaseUserManager):
 
     def create_teacher(self, username, email, password, university, department ,batch, year, semester):
         """Create and saves a new user"""
-        user = self.create_user(email, username, password, university, department ,batch, year, semester)
+        user = self.create_user(username, email, password, university, department ,batch, year, semester)
         user.is_teacher = True
         user.save(using=self._db)
 
@@ -92,7 +92,7 @@ class UserManager(BaseUserManager):
 
     def create_student(self, username, email, password, university, department ,batch, year, semester):
         """Create and saves a new user"""
-        user = self.create_user(email, username, password, university, department ,batch, year, semester)
+        user = self.create_user(username, email, password, university, department ,batch, year, semester)
         user.is_student = True
         user.save(using=self._db)
 

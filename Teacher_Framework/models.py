@@ -62,25 +62,38 @@ class Assignment_Assign_To_Student(models.Model):
 
 #----------------------------------GRADED ASSIGNMENT -------------------------------------#
 
-
 class Graded(models.Model):
-    title = models.CharField(max_length=200, null=True)
-    teacher = models.ForeignKey(
-        User, related_name="teacher_cr", on_delete=models.CASCADE, null=True)
+    question_text = models.CharField(max_length=200)
+    
     def __str__(self):
-        return self.title
-       
+        return self.question_text
+        
 
-class Graded_Questions(models.Model):
-    graded_assignment = models.ForeignKey(Graded, on_delete=models.CASCADE)
-    clo_code = models.CharField(max_length=200)
+class CLO_Graded(models.Model):
+    question = models.ForeignKey(Graded, on_delete=models.CASCADE)
+    choice_text = models.CharField(max_length=200)
+    votes = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.choice_text
+
+
+
+
+
+# --------------------------- Testing -------------------------- #
+
+class GA(models.Model):
+    tittle = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.tittle
+        
+
+class GQ(models.Model):
+    question = models.ForeignKey(GA, on_delete=models.CASCADE)
+    clo_text = models.CharField(max_length=200)
     marks = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.clo_code
-
-
-
-
-
-
+        return self.choice_text
